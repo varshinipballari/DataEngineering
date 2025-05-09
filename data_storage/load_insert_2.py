@@ -149,11 +149,18 @@ def createTable(conn):
 				FamilyWork          DECIMAL,
 				Unemployment        DECIMAL
 			);	
-			ALTER TABLE {TableName} ADD PRIMARY KEY (TractId);
-			CREATE INDEX idx_{TableName}_State ON {TableName}(State);
+		
 		""")
 
 		print(f"Created {TableName}")
+
+def addConstraintsAndIndex(conn):
+        with conn.cursor() as cursor:
+                cursor.execute(f"""
+                        ALTER TABLE {TableName} ADD PRIMARY KEY (TractId);
+                        CREATE INDEX idx_{TableName}_State ON {TableName}(State);
+                """)
+                print(f"Constraints and Indexes created on {TableName}")
 
 def load(conn, icmdlist):
 
@@ -178,6 +185,8 @@ def main():
 		createTable(conn)
 
 	load(conn, cmdlist)
+	if CreateDB:
+		addConstraintsAndIndex(conn)
 
 
 if __name__ == "__main__":
