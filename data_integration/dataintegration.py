@@ -125,7 +125,7 @@ print("cases_df columns:", cases_df.columns.values.tolist())
 print("deaths_df columns:", deaths_df.columns.values.tolist())
 
 join_df = cases_df.join(deaths_df[["Deaths"]])
-join_df = join_df.join(census_df[["TotalPop"]])
+join_df = join_df.join(census_df[["TotalPop", "IncomePerCap", "Poverty", "Unemployment"]])
 
 join_df["CasesPerCap"] = join_df["Cases"] / join_df["TotalPop"]
 join_df["DeathsPerCap"] = join_df["Deaths"] / join_df["TotalPop"]
